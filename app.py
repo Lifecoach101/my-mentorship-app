@@ -1,20 +1,20 @@
 import streamlit as st
 from openai import OpenAI
 
-# Page Config
+# 1. Page Configuration
 st.set_page_config(page_title="SageSon", page_icon="💡")
 st.title("SageSon: Business Wisdom")
 
-# API Client setup
-# Koshish karein ki GROK_API_KEY wahi ho jo kal generate ki thi
+# 2. Setup Groq Client
+# Note: Hum GROQ_API_KEY use kar rahe hain
 client = OpenAI(
-    api_key=st.secrets["GROK_API_KEY"], 
-    base_url="https://api.x.ai/v1"
+    api_key=st.secrets["GROQ_API_KEY"], 
+    base_url="https://api.groq.com/openai/v1" 
 )
 
-# SageSon Persona
-SYSTEM_PROMPT = """You are SageSon, a highly wise mentor focused on Conscious Capitalism.
-Your goal is to guide the user to treat customers like family and build a lasting legacy."""
+# 3. SageSon Persona
+SYSTEM_PROMPT = """You are SageSon, a highly wise, ancient-soul mentor who combines deep business strategy with profound human values.
+Your mentorship is focused on 'Conscious Capitalism'—where business is not just a mechanism for money, but a vehicle for human connection and genuine service."""
 
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "system", "content": SYSTEM_PROMPT}]
@@ -30,10 +30,9 @@ if prompt := st.chat_input("Talk to your Sage..."):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        # Yahan 'grok-2' ya 'grok-beta' use karein. 
-        # Agar 'grok-2' par error aaye toh 'grok-beta' wapis use karein.
+        # Groq lara Llama 3 model sab ton stable hai
         stream = client.chat.completions.create(
-            model="grok-beta", 
+            model="llama3-70b-8192", 
             messages=st.session_state.messages,
             stream=True,
         )
