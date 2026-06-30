@@ -40,7 +40,7 @@ if prompt := st.chat_input("Talk to your Sage..."):
     # Get response from Grok
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
-            model="grok-beta",
+            model="grok-2",
             messages=st.session_state.messages,
             stream=True,
         )
