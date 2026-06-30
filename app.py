@@ -32,7 +32,7 @@ if prompt := st.chat_input("Talk to your Sage..."):
     with st.chat_message("assistant"):
         # Groq lara Llama 3 model sab ton stable hai
         stream = client.chat.completions.create(
-            model="llama3-70b-8192", 
+            model="llama3-8b-8192", 
             messages=st.session_state.messages,
             stream=True,
         )
